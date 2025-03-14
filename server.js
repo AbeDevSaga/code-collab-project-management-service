@@ -19,10 +19,10 @@ app.use(
 
 connectDB();
 
-// app.use((req, res, next) => {
-//     console.log('Request Headers:', req.headers);
-//     next();
-// });
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next();
+});
 
 app.use("/api/projects", require("./routes/projectRoutes")); // Project-related routes
 

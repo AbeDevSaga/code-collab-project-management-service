@@ -16,6 +16,7 @@ const isAuthenticated = (req, res, next) => {
 
 // Middleware to check if user is an admin
 const isAdmin = (req, res, next) => {
+  console.log("isAdmin",req.user?.role)
   if (req.user?.role !== "Admin") {
     return res.status(403).json({ message: "Forbidden: Admins only" });
   }
@@ -23,6 +24,7 @@ const isAdmin = (req, res, next) => {
 };
 
 const isSuperAdmin = async (req, res, next) => {
+  console.log("isSuperAdmin",req.user?.role)
   if (req.user?.role !== "Super Admin") {
     return res.status(403).json({ message: "Forbidden: Admins only" });
   }

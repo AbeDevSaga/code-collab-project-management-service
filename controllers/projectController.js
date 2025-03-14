@@ -1,8 +1,27 @@
 const Project = require("../models/project.js");
 const Organization = require("../models/organization.js");
 
+//debug to fetch all projects
+const fetchProjects = async (req, res) => {
+  console.log("fetchProjects")
+  try {
+    const projects = await Project.find({})
+      .populate("organization", "name email website")
+      .populate("createdBy", "username email")
+      .populate("teamMembers.user", "username email role")
+      .populate("files", "name size")
+      .populate("tasks", "name status"); // Populate tasks
+
+    res.status(200).json(projects);
+  } catch (error) {
+    console.log("error:", error.message)
+    res.status(500).json({ message: "Error fetching projects", error: error.message });
+  }
+};
+
 // 1. Create a project (only super admins can create projects)
 const createProject = async (req, res) => {
+  console.log("createProject")
   try {
     const { name, description } = req.body;
     const createdBy = req.user._id;
@@ -28,6 +47,7 @@ const createProject = async (req, res) => {
 
 // 2. Get all projects in an organization
 const getProjects = async (req, res) => {
+  console.log("getProjects")
   try {
     const organizationId = req.params.id; // Organization ID from route parameter
 
@@ -36,7 +56,7 @@ const getProjects = async (req, res) => {
       "createdBy teamMembers.user files tasks"
     );
 
-    res.status(200).json({ projects });
+    res.status(200).json(projects);
   } catch (error) {
     res
       .status(500)
@@ -46,19 +66,20 @@ const getProjects = async (req, res) => {
 
 // 3. Get a single project by ID
 const getProjectById = async (req, res) => {
+  console.log("getProjectById")
   try {
     const projectId = req.params.id; // Project ID from route parameter
 
     // Fetch the project
     const project = await Project.findById(projectId).populate(
-      "createdBy teamMembers.user files tasks"
+      "organization createdBy teamMembers.user files tasks"
     );
 
     if (!project) {
       return res.status(404).json({ message: "Project not found" });
     }
 
-    res.status(200).json({ project });
+    res.status(200).json(project );
   } catch (error) {
     res
       .status(500)
@@ -68,6 +89,7 @@ const getProjectById = async (req, res) => {
 
 // 4. Update a project (only super admins can update projects)
 const updateProject = async (req, res) => {
+  console.log("updateProject")
   try {
     const projectId = req.params.id; // Project ID from route parameter
     const { name, description, status } = req.body;
@@ -96,6 +118,7 @@ const updateProject = async (req, res) => {
 
 // 5. Delete a project (only super admins can delete projects)
 const deleteProject = async (req, res) => {
+  console.log("deleteProject")
   try {
     const projectId = req.params.id; // Project ID from route parameter
 
@@ -117,6 +140,7 @@ const deleteProject = async (req, res) => {
 };
 
 module.exports = {
+  fetchProjects,
   createProject,
   getProjects,
   getProjectById,
