@@ -22,10 +22,11 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
-// Helper function to check if a user has permission to perform an action
-const hasPermission = (file, userId, requiredRole) => {
-  const sharedUser = file.sharedWith.find((user) => user.user.equals(userId));
-  return sharedUser && sharedUser.role === requiredRole;
+const isSuperAdmin = async (req, res, next) => {
+  if (req.user?.role !== "Super Admin") {
+    return res.status(403).json({ message: "Forbidden: Admins only" });
+  }
+  next();
 };
 
-module.exports = { isAuthenticated, isAdmin, hasPermission };
+module.exports = { isAuthenticated, isAdmin, isSuperAdmin };

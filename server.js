@@ -8,7 +8,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
 app.use(express.json());
 app.use(
   cors({
@@ -25,14 +24,12 @@ connectDB();
 //     next();
 // });
 
-// Routes
-app.use("/api/files", require("./routes/fileRoutes"));
-app.use("/api/git", require("./routes/gitRoutes"));
+app.use("/api/projects", require("./routes/projectRoutes")); // Project-related routes
 
 app.get("/", (req, res) => {
   res.send(
-    "<h1>Welcome to the Code Collaboration Platform!</h1><p>Use the /api/files and /api/git routes to manage files and Git operations.</p>"
+    "<h1>Welcome to the Project Service!</h1><p>Use the /api/projects route to manage projects.</p>"
   );
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Project Service running on port ${PORT}`));
