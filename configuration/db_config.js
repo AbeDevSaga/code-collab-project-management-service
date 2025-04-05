@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const dotenv = require('dotenv');
 const assignProjects = require("../seeds/seedProjects");
+const assignProjectsToOrg = require("../seeds/assignProjectToOrga");
 dotenv.config();
 
 // Import models
@@ -24,6 +25,7 @@ const connectDB = async () => {
 
     // Optional: Seed data (uncomment if needed)
     // await assignProjects();
+    // await assignProjectsToOrg();
   } catch (err) {
     console.error("Failed to connect to MongoDB", err);
     process.exit(1);

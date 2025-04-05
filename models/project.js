@@ -28,6 +28,9 @@ const ProjectSchema = new mongoose.Schema(
       },
     ],
 
+    // Chat Groups associated with the project
+    //chatGroups: [{ type: mongoose.Schema.Types.ObjectId, ref: "Chat" }],
+
     // Files associated with the project
     files: [{ type: mongoose.Schema.Types.ObjectId, ref: "File" }], // Files uploaded to the project
 
