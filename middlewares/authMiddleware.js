@@ -23,6 +23,15 @@ const isAdmin = (req, res, next) => {
   next();
 };
 
+const isProjectManager = (req, res, next) => {
+  console.log("isProjectManager",req.user?.role)
+  if (req.user?.role !== "Project Manager") {
+    return res.status(403).json({ message: "Forbidden: Project Manager only" });
+  }
+  next();
+};
+
+
 const isSuperAdmin = async (req, res, next) => {
   console.log("isSuperAdmin",req.user?.role)
   if (req.user?.role !== "Super Admin") {
@@ -31,4 +40,4 @@ const isSuperAdmin = async (req, res, next) => {
   next();
 };
 
-module.exports = { isAuthenticated, isAdmin, isSuperAdmin };
+module.exports = { isAuthenticated, isProjectManager, isAdmin, isSuperAdmin }; 

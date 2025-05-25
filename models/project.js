@@ -20,8 +20,8 @@ const ProjectSchema = new mongoose.Schema(
         user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // User who is part of the team
         role: {
           type: String,
-          enum: ["admin", "manager", "developer", "viewer"],
-          default: "developer",
+          enum: ["Admin", "Developer", "Member"],
+          default: "Developer",
         }, // Role of the user in the project
         addedAt: { type: Date, default: Date.now }, // When the user was added to the project
         addedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Who added the user to the project

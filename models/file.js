@@ -4,7 +4,7 @@ const FileSchema = new mongoose.Schema(
   {
     // Basic file information
     name: { type: String, required: true }, // Name of the file
-    type: { type: String, enum: ["code", "document", "image", "other"], required: true }, // Type of file (code, document, image, other)
+    type: { type: String, enum: ["code", "document", "image", "other"], default: "document"}, // Type of file (code, document, image, other)
     path: { type: String, required: true }, // Path to the file in storage (e.g., S3 or local storage)
     size: { type: Number, default: 0 }, // Size of the file in bytes
     extension: { type: String }, // File extension (e.g., .js, .py, .txt)

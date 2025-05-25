@@ -20,7 +20,7 @@ const TaskSchema = new mongoose.Schema(
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // User who created the task
     assignedTo: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // Users assigned to the task
     project: { type: mongoose.Schema.Types.ObjectId, ref: "Project", required: true }, // Project the task belongs to
-    organization: { type: mongoose.Schema.Types.ObjectId, ref: "Organization", required: true }, // Organization the task belongs to
+    organization: { type: mongoose.Schema.Types.ObjectId, ref: "Organization" }, // Organization the task belongs to
 
     // Task Timeline
     startDate: { type: Date }, // Task start date
@@ -29,7 +29,6 @@ const TaskSchema = new mongoose.Schema(
 
     // Task Metadata
     tags: [{ type: String }], // Tags for categorization (e.g., "bug", "feature", "refactor")
-    labels: [{ type: String }], // Labels for status (e.g., "high-priority", "low-priority")
     estimatedTime: { type: Number }, // Estimated time to complete the task (in hours)
     actualTime: { type: Number }, // Actual time spent on the task (in hours)
 
@@ -63,6 +62,9 @@ const TaskSchema = new mongoose.Schema(
     // Timestamps
     createdAt: { type: Date, default: Date.now }, // When the task was created
     updatedAt: { type: Date, default: Date.now }, // When the task was last updated
+
+    // Percentage
+    percentage: { type: String, default: "0%" } 
   },
   { timestamps: true } // Automatically adds `createdAt` and `updatedAt` fields
 );

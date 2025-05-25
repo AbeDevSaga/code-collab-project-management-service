@@ -34,7 +34,7 @@ const assignProjects = async () => {
           teamMembers: [
             {
               user: randomUser._id, // Add the creator as a team member
-              role: "admin", // Assign the admin role
+              role: "Admin", // Assign the admin role
               addedAt: new Date(),
               addedBy: randomUser._id,
             },
